@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D 户型翻新 — 2D 画户型，3D 看效果</title>
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<header class="topbar">
+  <h1>🏠 3D 户型翻新</h1>
+  <p class="subtitle">2D 画户型 · 一键换装修风格 · 3D 漫游 · 自动算造价</p>
+</header>
+
+<div class="toolbar">
+  <div class="group">
+    <span class="label">示例户型：</span>
+    <button data-sample="1" title="一居室示例">1 居室</button>
+    <button data-sample="2" title="二居室示例">2 居室</button>
+    <button data-sample="3" title="三居室示例">3 居室</button>
+    <button id="btn-clear">清空</button>
+  </div>
+  <div class="group">
+    <span class="label">装修风格：</span>
+    <select id="style-select">
+      <option value="modern">现代简约</option>
+      <option value="nordic">北欧</option>
+      <option value="chinese">新中式</option>
+      <option value="industrial">工业风</option>
+    </select>
+  </div>
+  <div class="group">
+    <span class="label">视图：</span>
+    <button id="btn-view-2d" class="active">2D 平面</button>
+    <button id="btn-view-3d">3D 预览</button>
+    <button id="btn-cam-top" disabled>俯视</button>
+    <button id="btn-cam-persp" disabled>透视</button>
+  </div>
+  <div class="group">
+    <button id="btn-export-json">导出方案 JSON</button>
+    <button id="btn-import-json">导入 JSON</button>
+    <input type="file" id="file-import-json" accept=".json,application/json" hidden>
+    <button id="btn-export-png" disabled>导出 3D 截图 PNG</button>
+  </div>
+</div>
+
+<main class="layout">
+  <section class="stage">
+    <div id="editor-2d">
+      <canvas id="plan-canvas" width="800" height="560"></canvas>
+      <p class="hint">操作：按住拖动 = 画新房间 · 点房间 = 选中 · 拖房间 = 移动 · 拖角落小方块 = 改大小 · 1 格 = 1 米</p>
+    </div>
+    <div id="viewer-3d" hidden>
+      <div id="three-container"></div>
+      <p class="hint">操作：左键拖动 = 旋转 · 滚轮 = 缩放 · 右键拖动 = 平移</p>
+    </div>
+  </section>
+
+  <aside class="sidebar">
+    <section class="panel" id="panel-room">
+      <h2>房间属性</h2>
+      <div id="room-empty">未选中房间。画一个房间，或点一下已有房间。</div>
+      <div id="room-form" hidden>
+        <label>名称 <input type="text" id="room-name"></label>
+        <label>类型
+          <select id="room-type">
+            <option value="living">客厅</option>
+            <option value="bedroom">卧室</option>
+            <option value="kitchen">厨房</option>
+            <option value="bathroom">卫生间</option>
+            <option value="balcony">阳台</option>
+            <option value="dining">餐厅</option>
+          </select>
+        </label>
+        <div class="row">
+          <label>宽 (m) <input type="number" id="room-w" min="1" max="20" step="0.5"></label>
+          <label>长 (m) <input type="number" id="room-h" min="1" max="20" step="0.5"></label>
+        </div>
+        <p class="room-info" id="room-area"></p>
+        <button id="btn-del-room" class="danger">删除房间</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>风格说明</h2>
+      <p id="style-desc"></p>
+      <ul class="style-meta" id="style-meta"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>造价估算 <span class="unit">（层高 2.8m，含硬装 + 家具）</span></h2>
+      <table id="cost-table">
+        <thead><tr><th>项目</th><th>数量</th><th>金额</th></tr></thead>
+        <tbody></tbody>
+        <tfoot><tr><td>合计</td><td></td><td id="cost-total">¥0</td></tr></tfoot>
+      </table>
+      <p class="note">单价为估算参考价，实际以施工报价为准。</p>
+    </section>
+  </aside>
+</main>
+
+<footer class="foot">3D 户型翻新 · 纯静态单页应用，无需后端，直接打开 index.html 即可使用</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

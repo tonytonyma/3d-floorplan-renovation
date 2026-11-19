@@ -1,0 +1,86 @@
+/* 3D 户型翻新 — 样式表 */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f2f3f5;
+  color: #222;
+}
+.topbar {
+  background: #1f2937;
+  color: #fff;
+  padding: 12px 20px;
+}
+.topbar h1 { margin: 0; font-size: 22px; }
+.topbar .subtitle { margin: 4px 0 0; color: #cbd5e1; font-size: 13px; }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.toolbar .group { display: flex; align-items: center; gap: 6px; }
+.toolbar .label { font-size: 13px; color: #666; }
+button, select, input[type="text"], input[type="number"] {
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: #f3f4f6; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+button.danger { background: #dc2626; color: #fff; border-color: #dc2626; }
+
+.layout {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  align-items: flex-start;
+}
+.stage { flex: 1; min-width: 0; }
+#editor-2d, #viewer-3d {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px;
+}
+#plan-canvas { display: block; width: 100%; height: auto; cursor: crosshair; }
+#three-container { width: 100%; height: 560px; }
+#three-container canvas { display: block; border-radius: 4px; }
+.hint { font-size: 12px; color: #888; margin: 8px 4px 0; }
+
+.sidebar { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px;
+}
+.panel h2 { margin: 0 0 10px; font-size: 16px; }
+.panel h2 .unit { font-size: 12px; color: #888; font-weight: normal; }
+.panel label { display: block; font-size: 13px; margin-bottom: 8px; }
+.panel input, .panel select { width: 100%; margin-top: 4px; }
+.panel .row { display: flex; gap: 10px; }
+.panel .row label { flex: 1; }
+.room-info { font-size: 13px; color: #555; }
+.style-meta { font-size: 13px; color: #555; padding-left: 18px; margin: 6px 0 0; }
+.style-meta li { margin-bottom: 3px; }
+#cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+#cost-table th, #cost-table td { border-bottom: 1px solid #eee; padding: 6px 4px; text-align: left; }
+#cost-table td:last-child, #cost-table th:last-child { text-align: right; }
+#cost-table tfoot td { font-weight: bold; border-bottom: none; }
+.note { font-size: 12px; color: #999; }
+.foot { text-align: center; color: #999; font-size: 12px; padding: 10px 0 20px; }
+
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; }
+  #three-container { height: 420px; }
+}
